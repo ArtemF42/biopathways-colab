@@ -62,8 +62,3 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame, method: str, metric: str):
                           center=0,
                           annot=annot.applymap(significance),
                           fmt='')
-
-
-if __name__ == '__main__':
-    dataset = Dataset('C:/Users/aafat/space/НУГ/deg/LUC/gene_scores.tsv')
-    print(dataset.head())
