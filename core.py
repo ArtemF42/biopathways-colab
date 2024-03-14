@@ -1,5 +1,8 @@
 from typing import List
 
+import pandas as pd
+import seaborn as sns
+
 
 class PathwayDatabase:
     DATABASES = {
@@ -23,3 +26,27 @@ class PathwayDatabase:
     
     def search(self, query: str) -> List[str]:
         return [pathway for pathway in self.pathways if query in pathway]
+
+
+def significance(p_value: float) -> str:
+    if p_value < 0.001:
+        return '***'
+    elif p_value < 0.01:
+        return '**'
+    elif p_value < 0.05:
+        return '*'
+    else:
+        return ''
+
+
+def heatmap(data: pd.DataFrame, annot: pd.DataFrame, method: str, metric: str):
+    n_rows, n_cols = data.shape
+
+    return sns.clustermap(data=data,
+                          method=method,
+                          metric=metric,
+                          figsize=(n_cols * 2, n_rows * 0.5),
+                          cmap='bwr',
+                          center=0,
+                          annot=annot.applymap(significance),
+                          fmt='')
