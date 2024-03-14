@@ -2,10 +2,17 @@ from typing import List
 
 
 class PathwayDatabase:
+    DATABASES = {
+        'hallmark': 'h.all.v2023.2.Hs.symbols.gmt',
+        'canonical pathways': 'c2.cp.v2023.2.Hs.symbols.gmt',
+        'reactome': 'c2.cp.reactome.v2023.2.Hs.symbols.gmt',
+        'transcription factor targets': 'c3.tft.v2023.2.Hs.symbols.gmt'
+    }
+
     def __init__(self, database: str) -> None:
         self.pathways = {}
 
-        with open(f'./biopathways/databases/{database}.gmt') as file:
+        with open(f'./biopathways/databases/{self.DATABASES[database]}') as file:
             for line in file:
                 pathway, _, *genes = line.removesuffix('\n').split('\t')
                 self.pathways[pathway] = genes
