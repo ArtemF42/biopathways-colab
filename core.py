@@ -28,6 +28,28 @@ class PathwayDatabase:
         return [pathway for pathway in self.pathways if query in pathway]
 
 
+class Dataset(pd.DataFrame):
+    def __init__(self) -> None:
+        super().__init__()
+    
+    def scale(self) -> None:
+        ...
+        #TODO ...
+    
+    @classmethod
+    def read(cls, filepath: str) -> ...:
+        match filepath.split('.')[-1]:
+            case 'csv':
+                sep = ','
+            case 'tsv':
+                set = '\t'
+            case _:
+                raise Exception
+        
+        return cls.read_csv(filepath, sep=sep, index_col=0)
+        
+
+
 def significance(p_value: float) -> str:
     if p_value < 0.001:
         return '***'
@@ -50,3 +72,4 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame, method: str, metric: str):
                           center=0,
                           annot=annot.applymap(significance),
                           fmt='')
+
