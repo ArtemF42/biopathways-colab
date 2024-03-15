@@ -14,7 +14,7 @@ def annotate(df: pd.DataFrame, pval: pd.DataFrame, lr_choice: str) -> Tuple[pd.D
         case 'ligands':
             df = df.loc[df.index.isin(LIGANDS)]
         case 'both':
-            df = df.loc[set(LIGANDS, RECEPTORS)]
+            df = df.loc[set([LIGANDS, RECEPTORS])]
             df.index = df.index.map(lambda gene: gene + ' (receptor)' 
                                     if gene in RECEPTORS else gene + ' (ligand)')
         case _:
