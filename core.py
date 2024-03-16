@@ -12,13 +12,16 @@ class PathwayDatabase:
         'transcription factor targets': 'c3.tft.v2023.2.Hs.symbols.gmt'
     }
 
-    def __init__(self, database: str) -> None:
+    def __init__(self, database: str, pathway: str=None, genes: List[str]=None) -> None:
         self.pathways = {}
-
-        with open(f'./biopathways/databases/{self.DATABASES[database]}') as file:
-            for line in file:
-                pathway, _, *genes = line.removesuffix('\n').split('\t')
-                self.pathways[pathway] = genes
+        
+        if database != 'custom':
+            with open(f'./biopathways/databases/{self.DATABASES[database]}') as file:
+                for line in file:
+                    pathway, _, *genes = line.removesuffix('\n').split('\t')
+                    self.pathways[pathway] = genes
+        else:
+            self.pathways[pathway] = genes
 
     def __getitem__(self, pathway: str) -> List[str]:
         if pathway in self.pathways:
