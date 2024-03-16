@@ -61,4 +61,5 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame, method: str, metric: str):
                           cmap='bwr',
                           center=0,
                           annot=annot.applymap(significance),
-                          fmt='')
+                          fmt='',
+                          col_cluster=False)
