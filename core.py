@@ -4,6 +4,9 @@ import pandas as pd
 import seaborn as sns
 
 
+from typing import Self, List
+
+
 class PathwayDatabase:
     DATABASES = {
         'hallmark': 'h.all.v2023.2.Hs.symbols.gmt',
@@ -12,23 +15,34 @@ class PathwayDatabase:
         'transcription factor targets': 'c3.tft.v2023.2.Hs.symbols.gmt'
     }
 
-    def __init__(self, database: str, pathway: str=None, genes: List[str]=None) -> None:
-        self.pathways = {}
-        
-        if database != 'custom':
-            with open(f'./biopathways/databases/{self.DATABASES[database]}') as file:
-                for line in file:
-                    pathway, _, *genes = line.removesuffix('\n').split('\t')
-                    self.pathways[pathway] = genes
-        else:
-            self.pathways[pathway] = genes
+    def __init__(self, pathways: dict) -> None:
+        self.pathways = pathways
 
-    def __getitem__(self, pathway: str) -> List[str]:
+    def __getitem__(self, pathway: str) -> List[str] | None:
         if pathway in self.pathways:
             return self.pathways[pathway]
     
-    def search(self, query: str) -> List[str]:
-        return [pathway for pathway in self.pathways if query in pathway]
+    def search(self, query: str, by_gene: bool = False) -> List[str]:
+        if by_gene:
+            return [pathway for pathway in self.pathways if query in self.pathways[pathway]]
+        else:
+            return [pathway for pathway in self.pathways if query in pathway]
+    
+    @classmethod
+    def load(cls, path: str, database: str) -> Self:
+        pathways = {}
+
+        with open(f'{path}/{cls.DATABASES[database]}') as file:
+            for line in file:
+                pathway, _, *genes = line.removesuffix('\n').split('\t')
+                pathways[pathway] = genes
+        
+        return cls(pathways)
+
+    @classmethod
+    @property
+    def collection(cls) -> List:
+        return list(cls.DATABASES)
 
 
 def read(filepath: str) -> pd.DataFrame:
