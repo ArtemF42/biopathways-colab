@@ -4,7 +4,7 @@ import pandas as pd
 import seaborn as sns
 
 
-from typing import Self, List
+from typing import List
 
 
 class PathwayDatabase:
@@ -29,7 +29,7 @@ class PathwayDatabase:
             return [pathway for pathway in self.pathways if query in pathway]
     
     @classmethod
-    def load(cls, path: str, database: str) -> Self:
+    def load(cls, path: str, database: str):
         pathways = {}
 
         with open(f'{path}/{cls.DATABASES[database]}') as file:
