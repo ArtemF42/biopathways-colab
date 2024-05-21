@@ -76,7 +76,7 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric:
                           metric=metric,
                           figsize=(n_cols * 2, n_rows * 0.5),
                           cmap='bwr',
-                          center=0,
+                          center=0 if annot is not None else None,
                           annot=annot.applymap(significance) if annot is not None else None,
                           fmt='',
                           col_cluster=vertical)
