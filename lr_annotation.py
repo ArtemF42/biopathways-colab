@@ -8,7 +8,7 @@ LIGANDS = LRDB['ligand_gene_symbol'].unique()
 RECEPTORS = LRDB['receptor_gene_symbol'].unique()
 
 
-def annotate(df: pd.DataFrame, pval: pd.DataFrame | None = None, lr_choice: str) -> Tuple[pd.DataFrame, pd.DataFrame | None]:    
+def annotate(df: pd.DataFrame, pval: pd.DataFrame | None, lr_choice: str) -> Tuple[pd.DataFrame, pd.DataFrame | None]:    
     match lr_choice:
         case 'receptors':
             df = df.loc[df.index.isin(RECEPTORS)]
