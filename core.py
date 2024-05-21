@@ -68,7 +68,7 @@ def significance(p_value: float) -> str:
         return ''
 
 
-def heatmap(data: pd.DataFrame, annot: pd.DataFrame, method: str, metric: str):
+def heatmap(data: pd.DataFrame, annot: pd.DataFrame, method: str, metric: str, vertical: bool):
     n_rows, n_cols = data.shape
 
     return sns.clustermap(data=data,
@@ -79,4 +79,4 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame, method: str, metric: str):
                           center=0,
                           annot=annot.applymap(significance),
                           fmt='',
-                          col_cluster=False)
+                          col_cluster=vertical)
