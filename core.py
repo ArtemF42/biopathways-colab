@@ -80,7 +80,7 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric:
                           # dendrogram_ratio=(.1, .2),
                           cmap='bwr',
                           center=0 if annot is not None else None,
-                          cbar_pos=(-0.1, .3, .04, .3),
+                          cbar_pos=(-0.2, .3, .04, .3),
                           annot=annot.applymap(significance) if annot is not None else None,
                           fmt='',
                           z_score=0 if annot is None else None,
