@@ -70,10 +70,12 @@ def significance(p_value: float) -> str:
 
 def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric: str, vertical: bool):
     n_rows, n_cols = data.shape
+    data.index.name = ''
 
     return sns.clustermap(data=data,
                           method=method,
                           metric=metric,
+                          cbar_kws={'label': 'log2FoldChange'},
                           figsize=(n_cols * 2, n_rows * 0.5),
                           cmap='bwr',
                           center=0 if annot is not None else None,
