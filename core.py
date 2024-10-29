@@ -1,10 +1,7 @@
-from typing import List
+from typing import List, Tuple
 
 import pandas as pd
 import seaborn as sns
-
-
-from typing import List
 
 
 class PathwayDatabase:
@@ -68,7 +65,7 @@ def significance(p_value: float) -> str:
         return ''
 
 
-def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric: str, vertical: bool):
+def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric: str, vertical: bool, cbar_pos: Tuple[float]):
     n_rows, n_cols = data.shape
     data.index.name = ''
 
@@ -80,7 +77,7 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric:
                           # dendrogram_ratio=(.1, .2),
                           cmap='bwr',
                           center=0 if annot is not None else None,
-                          cbar_pos=(-0.2, .3, .04, .3),
+                          cbar_pos=cbar_pos,
                           annot=annot.applymap(significance) if annot is not None else None,
                           fmt='',
                           z_score=0 if annot is None else None,
