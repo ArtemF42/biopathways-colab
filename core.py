@@ -65,7 +65,7 @@ def significance(p_value: float) -> str:
         return ''
 
 
-def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric: str, vertical: bool, cbar_pos: Tuple[float]):
+def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric: str, vertical: bool, cbar_pos: Tuple[float] = None, figsize: Tuple[float] = None):
     n_rows, n_cols = data.shape
     data.index.name = ''
 
@@ -73,7 +73,7 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric:
                           method=method,
                           metric=metric,
                           cbar_kws={'label': 'log2FoldChange'},
-                          figsize=(n_cols * 2, n_rows * 0.5),
+                          figsize=(n_cols * 2, n_rows * 0.5) if figsize is None else figsize,
                           # dendrogram_ratio=(.1, .2),
                           cmap='bwr',
                           center=0 if annot is not None else None,
