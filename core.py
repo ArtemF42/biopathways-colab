@@ -75,9 +75,9 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric:
                           cbar_kws={'label': 'log2FoldChange'},
                           figsize=figsize or (n_cols * 2, n_rows * 0.5),
                           cmap='bwr',
-                          center=annot and 0,
+                          center=0 if annot else None,
                           cbar_pos=cbar_pos,
-                          annot=annot and annot.map(significance),
+                          annot=annot.map(significance) if annot else None,
                           fmt='',
-                          z_score=not annot and 0,   # if annot = None then z_score = 0
+                          z_score=None if annot else 0,   # if annot = None then z_score = 0
                           col_cluster=vertical)
