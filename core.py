@@ -73,12 +73,11 @@ def heatmap(data: pd.DataFrame, annot: pd.DataFrame | None, method: str, metric:
                           method=method,
                           metric=metric,
                           cbar_kws={'label': 'log2FoldChange'},
-                          figsize=(n_cols * 2, n_rows * 0.5) if figsize is None else figsize,
-                          # dendrogram_ratio=(.1, .2),
+                          figsize=figsize or (n_cols * 2, n_rows * 0.5),
                           cmap='bwr',
-                          center=0 if annot is not None else None,
+                          center=annot and 0,
                           cbar_pos=cbar_pos,
-                          annot=annot.map(significance) if annot is not None else None,
+                          annot=annot and annot.map(significance),
                           fmt='',
-                          z_score=0 if annot is None else None,
+                          z_score=not annot and 0,   # if annot = None then z_score = 0
                           col_cluster=vertical)
